@@ -1,0 +1,4 @@
+---
+# configure_kerberos_kdcs/defaults/main.yml
+
+kerberos_realm: 'TRAINING.B1-SYSTEMS.DE'
