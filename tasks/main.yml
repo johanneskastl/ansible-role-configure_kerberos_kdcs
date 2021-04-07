@@ -1,0 +1,14 @@
+---
+# configure_kerberos_kdcs/tasks/main.yml
+
+- name: "Load variables"
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "vars_{{ ansible_distribution }}.yml"
+    - "vars_{{ ansible_os_family }}.yml"
+
+- name: 'Install packages'
+  include_tasks: install_packages.yml
+
+- name: 'Configure and start the kdc service'
+  include_tasks: configure_and_start_the_kdc_service.yml
