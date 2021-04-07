@@ -11,3 +11,8 @@
     name: "{{ kerberos_kdc_service }}"
     state: 'stopped'
     masked: 'false'
+
+- name: 'Restart the Kerberos KDC service'
+  service:
+    name: "{{ kerberos_kdc_service }}"
+    state: 'restarted'
