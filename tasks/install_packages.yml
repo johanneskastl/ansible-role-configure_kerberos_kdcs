@@ -1,0 +1,10 @@
+---
+# configure_kerberos_kdcs/tasks/install_packages.yml
+
+- name: 'Install Kerberos KDC packages'
+  package:
+    name: "{{ kerberos_kdc_packages }}"
+    state: 'present'
+  notify:
+    - 'Remove file kdc.conf (if it was created during installation)'
+    - 'Stop the Kerberos KDC service'
