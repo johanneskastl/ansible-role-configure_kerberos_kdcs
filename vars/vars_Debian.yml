@@ -1,0 +1,15 @@
+---
+# configure_kerberos_kdcs/vars/vars_Debian.yml
+
+# packages to be installed
+kerberos_kdc_packages:
+  - 'krb5-kdc'
+  - 'krb5-admin-server'
+  - 'krb5-user'
+  - 'krb5-doc'
+
+# service that should be unmasked and enabled (not started yet!)
+kerberos_kdc_service: 'krb5-kdc.service'
+
+# path to kdc.conf
+path_to_kdc_conf: '/etc/krb5kdc/kdc.conf'
