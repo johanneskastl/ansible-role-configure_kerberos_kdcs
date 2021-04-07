@@ -1,0 +1,18 @@
+---
+# configure_kerberos_kdcs/tasks/configure_and_start_the_kdc_service.yml
+
+- name: 'Create kdc.conf'
+  template:
+    src: 'kdc_conf.j2'
+    dest: "{{ path_to_kdc_conf }}"
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify:
+    - 'Restart the Kerberos KDC service'
+
+- name: 'Start and the Kerberos KDC service'
+  service:
+    name: "{{ kerberos_kdc_service }}"
+    state: 'started'
+    enabled: 'true'
