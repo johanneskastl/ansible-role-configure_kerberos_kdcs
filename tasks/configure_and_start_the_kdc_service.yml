@@ -11,6 +11,12 @@
   notify:
     - 'Restart the Kerberos KDC service'
 
+- name: 'Initialize KDC database'
+  command:
+    cmd: "kdb5_util -s -r {{ kerberos_realm }} create -P {{ kdc_master_password }}"
+    creates: "{{ path_to_principal_database }}"
+  no_log: 'true'
+
 - name: 'Start and the Kerberos KDC service'
   service:
     name: "{{ kerberos_kdc_service }}"
