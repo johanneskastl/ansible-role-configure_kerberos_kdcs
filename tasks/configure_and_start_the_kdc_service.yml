@@ -1,6 +1,14 @@
 ---
 # configure_kerberos_kdcs/tasks/configure_and_start_the_kdc_service.yml
 
+- name: 'Create krb5.conf'
+  template:
+    src: 'krb5_conf.j2'
+    dest: "{{ path_to_krb5_conf }}"
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+
 - name: 'Create kdc.conf'
   template:
     src: 'kdc_conf.j2'
