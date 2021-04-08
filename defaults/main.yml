@@ -1,6 +1,8 @@
 ---
 # configure_kerberos_kdcs/defaults/main.yml
 
+path_to_krb5_conf: '/etc/krb5.conf'
+
 kerberos_realm: 'TRAINING.B1-SYSTEMS.DE'
 kerberos_ports:
   - 88
