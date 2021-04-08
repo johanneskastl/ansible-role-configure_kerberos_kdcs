@@ -3,7 +3,6 @@
 
 kerberos_realm: 'TRAINING.B1-SYSTEMS.DE'
 kerberos_ports:
-  - 750
   - 88
 kerberos_tcp_ports:
   - 88
