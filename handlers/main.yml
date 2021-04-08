@@ -6,6 +6,11 @@
     path: "{{ path_to_kdc_conf }}"
     state: 'absent'
 
+- name: 'Remove file krb5.conf (if it was created during installation)'
+  file:
+    path: "{{ path_to_krb5_conf }}"
+    state: 'absent'
+
 - name: 'Stop the Kerberos KDC service'
   service:
     name: "{{ kerberos_kdc_service }}"
