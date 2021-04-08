@@ -8,7 +8,6 @@
         admin_keytab = {{ path_to_admin_keytab }}
         acl_file = {{ path_to_acl_file }}
         key_stash_file = {{ path_to_key_stash_file }}
-        kdc_ports = {{ kerberos_ports | join(',') }}
         max_life = {{ kerberos_max_life }}
         max_renewable_life = {{ kerberos_max_renewable_life }}
         master_key_type = {{ kerberos_master_key_type }}
