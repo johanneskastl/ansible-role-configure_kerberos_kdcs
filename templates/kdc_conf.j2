@@ -1,5 +1,6 @@
 [kdcdefaults]
     kdc_ports = {{ kerberos_ports | join(',') }}
+    kdc_tcp_ports = {{ kerberos_tcp_ports | join(',') }}
 
 [realms]
     {{ kerberos_realm }} = {
