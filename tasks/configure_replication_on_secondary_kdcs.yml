@@ -1,6 +1,40 @@
 ---
 # configure_kerberos_kdcs/tasks/configure_replication_on_secondary_kdcs.yml
 
+- name: 'Create keytab for secondary KDCs on first KDC'
+  command:
+    cmd: "kadmin.local ktadd -k /root/keytab_for_secondary_kdc_{{ item }} host/{{ item }}.{{ kerberos_dns_domain | default(kerberos_realm | lower) }}"
+    creates: "/root/keytab_for_secondary_kdc_{{ item }}"
+  with_items: "{{ ansible_play_hosts }}"
+  delegate_to: "{{ replication_source_server  }}"
+  when: 'configure_replication_on_secondary_kdcs | bool'
+  tags:
+    - 'replication_other_kdcs'
+
+- name: 'Fetch keytabs to ansible control host'
+  fetch:
+    src: "/root/keytab_for_secondary_kdc_{{ item }}"
+    dest: "keytab_files/keytab_for_secondary_kdc_{{ item }}"
+    flat: 'yes'
+  with_items: "{{ ansible_play_hosts }}"
+  delegate_to: "{{ replication_source_server  }}"
+  when: 'configure_replication_on_secondary_kdcs | bool'
+  tags:
+    - 'replication_other_kdcs'
+
+- name: 'Copy keytab from the ansible control host to the secondary KDC'
+  copy:
+    src: "keytab_files/keytab_for_secondary_kdc_{{ item }}"
+    dest: '/etc/krb5.keytab'
+    owner: 'root'
+    group: 'root'
+    mode: '0600'
+  with_items: "{{ ansible_play_hosts }}"
+  diff: 'false'
+  when: 'configure_replication_on_secondary_kdcs | bool'
+  tags:
+    - 'replication_other_kdcs'
+
 - name: 'Create the kpropd.acl file'
   copy:
     content: |
