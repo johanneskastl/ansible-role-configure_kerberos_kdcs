@@ -19,3 +19,6 @@ path_to_principal_database: '/var/lib/krb5kdc/principal'
 path_to_admin_keytab: 'FILE:/etc/krb5kdc/kadm5.keytab'
 path_to_acl_file: '/etc/krb5kdc/kadm5.acl'
 path_to_key_stash_file: '/etc/krb5kdc/stash'
+
+# replication settings
+path_to_kpropd_acl: '/etc/krb5kdc/kpropd.acl'
