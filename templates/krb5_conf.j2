@@ -5,3 +5,12 @@
 	default_realm = {{ kerberos_realm }}
 	dns_lookup_realm = {{ dns_lookup_realm }}
 	dns_lookup_kdc = {{ dns_lookup_kdc }}
+
+[realms]
+	{{ kerberos_realm }} = {
+		admin_server = {{ admin_server | default( inventory_hostname ) }}.{{ kerberos_dns_domain | default(kerberos_realm | lower) }}
+	}
+
+[domain_realm]
+	.{{ kerberos_dns_domain | default(kerberos_realm | lower) }} = {{ kerberos_realm }}
+	{{ kerberos_dns_domain | default(kerberos_realm | lower) }} = {{ kerberos_realm }}
