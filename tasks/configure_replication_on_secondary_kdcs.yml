@@ -10,6 +10,8 @@
     group: 'root'
     mode: '0644'
   when: 'not kdc_is_first_kdc | bool'
+  notify:
+    - 'Restart the Kerberos kpropd service'
   tags:
     - 'replication_other_kdcs'
 
