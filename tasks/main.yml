@@ -19,3 +19,9 @@
   include_tasks: configure_and_start_the_kdc_service.yml
   tags:
     - 'configuration'
+
+- name: 'Configure the replication on the secondary KDCs'
+  include_tasks: configure_replication_on_secondary_kdcs.yml
+  when: 'not kdc_is_first_kdc | bool'
+  tags:
+    - 'replication_other_kdcs'
