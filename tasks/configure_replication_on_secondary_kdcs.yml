@@ -12,3 +12,11 @@
   when: 'not kdc_is_first_kdc | bool'
   tags:
     - 'replication_other_kdcs'
+
+- name: 'Install the kpropd packages'
+  package:
+    name: "{{ kpropd_package }}"
+    state: 'present'
+  when: 'not kdc_is_first_kdc | bool'
+  tags:
+    - 'replication_other_kdcs'
