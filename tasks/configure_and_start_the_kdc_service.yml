@@ -8,6 +8,8 @@
     owner: 'root'
     group: 'root'
     mode: '0644'
+  tags:
+    - 'configuration'
 
 - name: 'Create kdc.conf'
   template:
@@ -18,15 +20,21 @@
     mode: '0644'
   notify:
     - 'Restart the Kerberos KDC service'
+  tags:
+    - 'configuration'
 
 - name: 'Initialize KDC database'
   command:
     cmd: "kdb5_util -s -r {{ kerberos_realm }} create -P {{ kdc_master_password }}"
     creates: "{{ path_to_principal_database }}"
   no_log: 'true'
+  tags:
+    - 'configuration'
 
 - name: 'Start and the Kerberos KDC service'
   service:
     name: "{{ kerberos_kdc_service }}"
     state: 'started'
     enabled: 'true'
+  tags:
+    - 'configuration'
