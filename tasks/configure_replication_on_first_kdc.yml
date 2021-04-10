@@ -2,6 +2,44 @@
 # configure_kerberos_kdcs/tasks/configure_replication_on_first_kdc.yml
 
 #
+# list all existing principals
+#
+- name: 'List all kerberos principals'
+  command:
+    cmd: 'kadmin.local listprincs'
+  changed_when: 'false'
+  check_mode: 'false'
+  register: list_of_principals
+  tags:
+    - 'replication_1st_kdc'
+
+#
+# create host principal for the first KDC
+#
+- name: 'Create host principal for the first KDC'
+  command:
+    cmd: "kadmin.local addprinc -clearpolicy -randkey host/{{ item }}.{{ kerberos_dns_domain | default(kerberos_realm | lower) }}"
+  with_items:
+    - "{{ inventory_hostname }}"
+  when: "item not in list_of_principals.stdout"
+  tags:
+    - 'replication_1st_kdc'
+
+#
+# create principals for all secondary KDCs
+#
+- name: 'Create host principals for all secondary KDCs'
+  command:
+    cmd: "kadmin.local addprinc -clearpolicy -randkey host/{{ item }}.{{ kerberos_dns_domain | default(kerberos_realm | lower) }}"
+  with_items:
+    - "{{ secondary_kdcs }}"
+  when:
+    - 'secondary_kdcs is defined'
+    - 'item not in list_of_principals.stdout'
+  tags:
+    - 'replication_1st_kdc'
+
+#
 # systemd timer for replication
 #
 
