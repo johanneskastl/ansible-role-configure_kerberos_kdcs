@@ -4,6 +4,9 @@
 # path to krb5.conf
 path_to_krb5_conf: '/etc/krb5.conf'
 
+# path to krb5.keytab
+path_to_krb5_keytab: '/etc/krb5.keytab'
+
 # settings for krb5.conf and kdc.conf
 kerberos_realm: 'TRAINING.B1-SYSTEMS.DE'
 
