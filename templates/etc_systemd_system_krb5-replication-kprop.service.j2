@@ -1,0 +1,14 @@
+#
+# {{ ansible_managed }}
+#
+[Unit]
+Description=Kerberos KRB5 replication via kprop to {{ secondary_kdc_to_sync }}
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStartPre=/usr/sbin/kdb5_util dump /var/lib/krb5kdc/kdb_repldata
+ExecStart=/usr/sbin/kprop -f /var/lib/krb5kdc/kdb_repldata {{ secondary_kdc_to_sync }}
+
+[Install]
+WantedBy=multi-user.target
