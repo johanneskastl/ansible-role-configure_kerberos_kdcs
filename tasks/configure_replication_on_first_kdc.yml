@@ -1,6 +1,10 @@
 ---
 # configure_kerberos_kdcs/tasks/configure_replication_on_first_kdc.yml
 
+#
+# systemd timer for replication
+#
+
 - name: 'Create systemd service for krb5-replication-kprop'
   template:
     src: 'etc_systemd_system_krb5-replication-kprop.service.j2'
