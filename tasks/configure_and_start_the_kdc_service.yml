@@ -8,6 +8,8 @@
     owner: 'root'
     group: 'root'
     mode: '0644'
+  notify:
+    - 'Restart the Kerberos KDC service'
   tags:
     - 'configuration'
 
