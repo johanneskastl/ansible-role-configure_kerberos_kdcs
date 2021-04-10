@@ -1,0 +1,34 @@
+---
+# configure_kerberos_kdcs/tasks/configure_replication_on_first_kdc.yml
+
+- name: 'Create systemd service for krb5-replication-kprop'
+  template:
+    src: 'etc_systemd_system_krb5-replication-kprop.service.j2'
+    dest: '/etc/systemd/system/krb5-replication-kprop.service'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  with_items: "{{ secondary_kdcs }}"
+  loop_control:
+    loop_var: secondary_kdc_to_sync
+  when: 'secondary_kdcs is defined'
+  notify:
+    - 'Trigger systemctl daemon-reload'
+    - 'Enable and start the krb5-replication-kprop.timer'
+    - 'Restart krb5-replication-kprop.timer'
+
+- name: 'Create systemd timer for krb5-replication-kprop'
+  template:
+    src: 'etc_systemd_system_krb5-replication-kprop.timer.j2'
+    dest: '/etc/systemd/system/krb5-replication-kprop.timer'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  with_items: "{{ secondary_kdcs }}"
+  loop_control:
+    loop_var: secondary_kdc_to_sync
+  when: 'secondary_kdcs is defined'
+  notify:
+    - 'Trigger systemctl daemon-reload'
+    - 'Enable and start the krb5-replication-kprop.timer'
+    - 'Restart krb5-replication-kprop.timer'
