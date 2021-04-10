@@ -9,7 +9,7 @@
     owner: 'root'
     group: 'root'
     mode: '0644'
-  when: 'not kdc_is_first_kdc | bool'
+  when: 'configure_replication_on_secondary_kdcs | bool'
   notify:
     - 'Restart the Kerberos kpropd service'
   tags:
@@ -19,7 +19,7 @@
   package:
     name: "{{ kpropd_package }}"
     state: 'present'
-  when: 'not kdc_is_first_kdc | bool'
+  when: 'configure_replication_on_secondary_kdcs | bool'
   tags:
     - 'replication_other_kdcs'
 
@@ -28,7 +28,7 @@
     name: "{{ kerberos_kpropd_service }}"
     state: 'started'
     enabled: 'true'
-  when: 'not kdc_is_first_kdc | bool'
+  when: 'configure_replication_on_secondary_kdcs | bool'
   tags:
     - 'replication_other_kdcs'
 
@@ -37,6 +37,6 @@
     name: "{{ kerberos_kdc_service }}"
     state: 'started'
     enabled: 'true'
-  when: 'not kdc_is_first_kdc | bool'
+  when: 'configure_replication_on_secondary_kdcs | bool'
   tags:
     - 'replication_other_kdcs'
