@@ -40,6 +40,18 @@
     - 'replication_1st_kdc'
 
 #
+# Create krb5.keytab if it does not yet exist
+#
+- name: 'Create krb5.keytab if it does not yet exist'
+  command:
+    cmd: "kadmin.local ktadd -k {{ path_to_krb5_keytab }} host/{{ item }}.{{ kerberos_dns_domain | default(kerberos_realm | lower) }}"
+    creates: "{{ path_to_krb5_keytab }}"
+  with_items:
+    - "{{ inventory_hostname }}"
+  tags:
+    - 'replication_1st_kdc'
+
+#
 # systemd timer for replication
 #
 
