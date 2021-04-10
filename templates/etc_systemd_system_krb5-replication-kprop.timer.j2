@@ -1,0 +1,11 @@
+#
+# {{ ansible_managed }}
+#
+[Unit]
+Description=Timer for Kerberos KRB5 replication via kprop to {{ secondary_kdc_to_sync }}
+
+[Timer]
+OnCalendar=*:0/5
+
+[Install]
+WantedBy=timers.target
