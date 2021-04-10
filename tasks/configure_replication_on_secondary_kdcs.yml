@@ -3,7 +3,7 @@
 
 - name: 'Create keytab for secondary KDCs on first KDC'
   command:
-    cmd: "kadmin.local ktadd -k /root/keytab_for_secondary_kdc_{{ item }} host/{{ item }}.{{ kerberos_dns_domain | default(kerberos_realm | lower) }}"
+    cmd: "kadmin.local ktadd -norandkey -k /root/keytab_for_secondary_kdc_{{ item }} host/{{ item }}.{{ kerberos_dns_domain | default(kerberos_realm | lower) }}"
     creates: "/root/keytab_for_secondary_kdc_{{ item }}"
   with_items: "{{ ansible_play_hosts }}"
   delegate_to: "{{ replication_source_server  }}"
