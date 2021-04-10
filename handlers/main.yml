@@ -52,6 +52,12 @@
   ansible.builtin.systemd:
     daemon_reload: 'yes'
 
+- name: 'Enable and start the krb5-replication-kprop.timer'
+  service:
+    name: 'krb5-replication-kprop.timer'
+    state: 'started'
+    enabled: 'true'
+
 - name: 'Restart krb5-replication-kprop.timer'
   service:
     name: 'krb5-replication-kprop.timer'
