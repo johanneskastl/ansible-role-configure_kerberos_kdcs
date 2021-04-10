@@ -44,3 +44,12 @@
   when: 'not kdc_is_first_kdc | bool'
   tags:
     - 'replication_other_kdcs'
+
+- name: 'Trigger systemctl daemon-reload'
+  ansible.builtin.systemd:
+    daemon_reload: 'yes'
+
+- name: 'Restart krb5-replication-kprop.timer'
+  service:
+    name: 'krb5-replication-kprop.timer'
+    state: 'restarted'
