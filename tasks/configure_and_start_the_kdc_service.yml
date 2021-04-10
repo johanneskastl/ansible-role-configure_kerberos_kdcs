@@ -28,6 +28,7 @@
     cmd: "kdb5_util -s -r {{ kerberos_realm }} create -P {{ kdc_master_password }}"
     creates: "{{ path_to_principal_database }}"
   no_log: 'true'
+  when: 'kdc_is_first_kdc | bool'
   tags:
     - 'configuration'
 
@@ -36,5 +37,6 @@
     name: "{{ kerberos_kdc_service }}"
     state: 'started'
     enabled: 'true'
+  when: 'kdc_is_first_kdc | bool'
   tags:
     - 'configuration'
