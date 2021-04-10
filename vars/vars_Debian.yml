@@ -22,3 +22,4 @@ path_to_key_stash_file: '/etc/krb5kdc/stash'
 
 # replication settings
 path_to_kpropd_acl: '/etc/krb5kdc/kpropd.acl'
+kpropd_package: 'krb5-kpropd'
