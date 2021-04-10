@@ -20,3 +20,12 @@
   when: 'not kdc_is_first_kdc | bool'
   tags:
     - 'replication_other_kdcs'
+
+- name: 'Start and enable the Kerberos kpropd service'
+  service:
+    name: "{{ kerberos_kpropd_service }}"
+    state: 'started'
+    enabled: 'true'
+  when: 'not kdc_is_first_kdc | bool'
+  tags:
+    - 'replication_other_kdcs'
