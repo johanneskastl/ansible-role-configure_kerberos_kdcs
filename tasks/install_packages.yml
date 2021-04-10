@@ -9,6 +9,10 @@
     - 'Remove file kdc.conf (if it was created during installation)'
     - 'Remove file krb5.conf (if it was created during installation)'
     - 'Stop the Kerberos KDC service'
+  tags:
+    - 'installation'
 
 - name: 'Force all notified handlers to run at this point, not waiting for normal sync points'
   meta: flush_handlers
+  tags:
+    - 'installation'
