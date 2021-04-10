@@ -14,3 +14,9 @@
 [domain_realm]
 	.{{ kerberos_dns_domain | default(kerberos_realm | lower) }} = {{ kerberos_realm }}
 	{{ kerberos_dns_domain | default(kerberos_realm | lower) }} = {{ kerberos_realm }}
+{% if dns_subdomains is defined %}
+{% for entry in dns_subdomains %}
+	.{{ entry }} = {{ kerberos_realm }}
+	{{ entry }} = {{ kerberos_realm }}
+{% endfor %}
+{% endif %}
