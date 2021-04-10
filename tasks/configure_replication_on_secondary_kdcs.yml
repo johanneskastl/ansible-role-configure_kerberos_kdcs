@@ -1,0 +1,14 @@
+---
+# configure_kerberos_kdcs/tasks/configure_replication_on_secondary_kdcs.yml
+
+- name: 'Create the kpropd.acl file'
+  copy:
+    content: |
+      host/{{ replication_source_server }}.{{ kerberos_dns_domain | default(kerberos_realm | lower) }}@{{ kerberos_realm }}
+    dest: "{{ path_to_kpropd_acl }}"
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  when: 'not kdc_is_first_kdc | bool'
+  tags:
+    - 'replication_other_kdcs'
