@@ -35,7 +35,7 @@
     - 'configuration'
 
 #
-# Replication
+# Replication on secondary KDCs
 #
 - name: 'Restart the Kerberos kpropd service'
   service:
@@ -45,6 +45,9 @@
   tags:
     - 'replication_other_kdcs'
 
+#
+# Replication on first KDC
+#
 - name: 'Trigger systemctl daemon-reload'
   ansible.builtin.systemd:
     daemon_reload: 'yes'
