@@ -36,6 +36,6 @@
     name: "{{ kerberos_kdc_service }}"
     state: 'started'
     enabled: 'true'
-  when: 'kdc_is_first_kdc | bool'
+  when: 'not configure_replication_on_secondary_kdcs| bool'
   tags:
     - 'configuration'
