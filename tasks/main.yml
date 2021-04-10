@@ -9,6 +9,8 @@
   tags:
     - 'installation'
     - 'configuration'
+    - 'replication_1st_kdc'
+    - 'replication_other_kdcs'
 
 - name: 'Install packages'
   include_tasks: install_packages.yml
