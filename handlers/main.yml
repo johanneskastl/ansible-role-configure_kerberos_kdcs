@@ -27,5 +27,6 @@
   service:
     name: "{{ kerberos_kdc_service }}"
     state: 'restarted'
+  when: 'kdc_is_first_kdc | bool'
   tags:
     - 'configuration'
