@@ -22,6 +22,12 @@
   tags:
     - 'configuration'
 
+- name: 'Configure the replication on the first KDC'
+  include_tasks: configure_replication_on_first_kdc.yml
+  when: 'kdc_is_first_kdc | bool'
+  tags:
+    - 'replication_1st_kdc'
+
 - name: 'Configure the replication on the secondary KDCs'
   include_tasks: configure_replication_on_secondary_kdcs.yml
   when: 'not kdc_is_first_kdc | bool'
