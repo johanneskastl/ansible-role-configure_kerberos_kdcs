@@ -122,3 +122,12 @@
     - 'Restart krb5-replication-kprop.timer'
   tags:
     - 'replication_1st_kdc'
+
+- name: 'Enable and start the krb5-replication-kprop.timer'
+  service:
+    name: 'krb5-replication-kprop.timer'
+    state: 'started'
+    enabled: 'true'
+  when: 'secondary_kdcs is defined'
+  tags:
+    - 'replication_1st_kdc'
