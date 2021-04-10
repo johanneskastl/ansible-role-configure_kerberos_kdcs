@@ -23,6 +23,3 @@ kerberos_max_life: '10h 0m 0s'
 kerberos_max_renewable_life: '7d 0h 0m 0s'
 kerberos_master_key_type: 'des3-hmac-sha1'
 kerberos_default_principal_flags: '+preauth'
-
-# set default for kdc_is_first_kdc
-kdc_is_first_kdc: true
