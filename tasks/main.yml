@@ -9,6 +9,10 @@
 
 - name: 'Install packages'
   include_tasks: install_packages.yml
+  tags:
+    - 'installation'
 
 - name: 'Configure and start the kdc service'
   include_tasks: configure_and_start_the_kdc_service.yml
+  tags:
+    - 'configuration'
