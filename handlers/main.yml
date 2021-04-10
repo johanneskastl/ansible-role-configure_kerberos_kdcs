@@ -30,3 +30,11 @@
   when: 'kdc_is_first_kdc | bool'
   tags:
     - 'configuration'
+
+- name: 'Restart the Kerberos kpropd service'
+  service:
+    name: "{{ kerberos_kpropd_service }}"
+    state: 'restarted'
+  when: 'not kdc_is_first_kdc | bool'
+  tags:
+    - 'replication_other_kdcs'
