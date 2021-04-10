@@ -20,6 +20,8 @@
     - 'Trigger systemctl daemon-reload'
     - 'Enable and start the krb5-replication-kprop.timer'
     - 'Restart krb5-replication-kprop.timer'
+  tags:
+    - 'replication_1st_kdc'
 
 - name: 'Create systemd timer for krb5-replication-kprop'
   template:
@@ -36,3 +38,5 @@
     - 'Trigger systemctl daemon-reload'
     - 'Enable and start the krb5-replication-kprop.timer'
     - 'Restart krb5-replication-kprop.timer'
+  tags:
+    - 'replication_1st_kdc'
