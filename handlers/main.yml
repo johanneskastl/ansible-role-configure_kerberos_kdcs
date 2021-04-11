@@ -41,7 +41,7 @@
   service:
     name: "{{ kerberos_kpropd_service }}"
     state: 'restarted'
-  when: 'not kdc_is_first_kdc | bool'
+  when: 'configure_replication_on_secondary_kdcs | bool'
   tags:
     - 'replication_other_kdcs'
 
