@@ -5,8 +5,8 @@
 # list all existing principals
 #
 - name: 'List all kerberos principals'
-  command:
-    cmd: 'kadmin.local listprincs'
+  shell:
+    cmd: 'kadmin.local listprincs | grep ^host'
   changed_when: 'false'
   check_mode: 'false'
   register: list_of_principals
