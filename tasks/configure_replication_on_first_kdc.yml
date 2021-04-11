@@ -9,7 +9,7 @@
     cmd: 'kadmin.local listprincs | grep ^host'
   changed_when: 'false'
   check_mode: 'false'
-  register: list_of_principals
+  register: list_of_host_principals
   tags:
     - 'replication_1st_kdc'
 
@@ -21,7 +21,7 @@
     cmd: "kadmin.local addprinc -clearpolicy -randkey host/{{ item }}.{{ kerberos_dns_domain | default(kerberos_realm | lower) }}"
   with_items:
     - "{{ inventory_hostname }}"
-  when: "item not in list_of_principals.stdout"
+  when: "item not in list_of_host_principals.stdout"
   tags:
     - 'replication_1st_kdc'
 
@@ -35,7 +35,7 @@
     - "{{ secondary_kdcs }}"
   when:
     - 'secondary_kdcs is defined'
-    - 'item not in list_of_principals.stdout'
+    - 'item not in list_of_host_principals.stdout'
   tags:
     - 'replication_1st_kdc'
 
