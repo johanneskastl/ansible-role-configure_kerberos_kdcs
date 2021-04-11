@@ -101,7 +101,6 @@
   when: 'secondary_kdcs is defined'
   notify:
     - 'Trigger systemctl daemon-reload'
-    - 'Enable and start the krb5-replication-kprop.timer'
     - 'Restart krb5-replication-kprop.timer'
   tags:
     - 'replication_1st_kdc'
@@ -119,7 +118,6 @@
   when: 'secondary_kdcs is defined'
   notify:
     - 'Trigger systemctl daemon-reload'
-    - 'Enable and start the krb5-replication-kprop.timer'
     - 'Restart krb5-replication-kprop.timer'
   tags:
     - 'replication_1st_kdc'
