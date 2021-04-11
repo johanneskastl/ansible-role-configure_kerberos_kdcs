@@ -14,10 +14,19 @@
   fetch:
     src: "/root/keytab_for_secondary_kdc_{{ inventory_hostname }}"
     dest: "keytab_files/keytab_for_secondary_kdc_{{ inventory_hostname }}"
-    # owner/group not set => user calling ansible
-    mode: '0600'
     flat: 'yes'
   delegate_to: "{{ replication_source_server  }}"
+  when: 'configure_replication_on_secondary_kdcs | bool'
+  tags:
+    - 'replication_other_kdcs'
+
+- name: 'Fix permissions on keytab files on the ansible control host'
+  file:
+    path: "keytab_files/keytab_for_secondary_kdc_{{ inventory_hostname }}"
+    # owner/group not set => user calling ansible
+    mode: '0600'
+  delegate_to: 'localhost'
+  become: 'false'
   when: 'configure_replication_on_secondary_kdcs | bool'
   tags:
     - 'replication_other_kdcs'
