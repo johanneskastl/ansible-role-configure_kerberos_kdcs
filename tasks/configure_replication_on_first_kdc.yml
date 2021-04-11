@@ -88,10 +88,10 @@
 # systemd timer for replication
 #
 
-- name: 'Create systemd service for krb5-replication-kprop'
+- name: 'Create a krb5-replication-kprop systemd service for each secondary KDC'
   template:
     src: 'etc_systemd_system_krb5-replication-kprop.service.j2'
-    dest: '/etc/systemd/system/krb5-replication-kprop.service'
+    dest: "/etc/systemd/system/krb5-replication-kprop-{{ secondary_kdc_to_sync }}.service"
     owner: 'root'
     group: 'root'
     mode: '0644'
@@ -101,14 +101,14 @@
   when: 'secondary_kdcs is defined'
   notify:
     - 'Trigger systemctl daemon-reload'
-    - 'Restart krb5-replication-kprop.timer'
+    - 'Restart the krb5-replication-kprop timers'
   tags:
     - 'replication_1st_kdc'
 
-- name: 'Create systemd timer for krb5-replication-kprop'
+- name: 'Create a systemd timer for each krb5-replication-kprop service'
   template:
     src: 'etc_systemd_system_krb5-replication-kprop.timer.j2'
-    dest: '/etc/systemd/system/krb5-replication-kprop.timer'
+    dest: "/etc/systemd/system/krb5-replication-kprop-{{ secondary_kdc_to_sync }}.timer"
     owner: 'root'
     group: 'root'
     mode: '0644'
@@ -118,15 +118,17 @@
   when: 'secondary_kdcs is defined'
   notify:
     - 'Trigger systemctl daemon-reload'
-    - 'Restart krb5-replication-kprop.timer'
+    - 'Restart the krb5-replication-kprop timers'
   tags:
     - 'replication_1st_kdc'
 
-- name: 'Enable and start the krb5-replication-kprop.timer'
+- name: 'Enable the krb5-replication-kprop timers'
   service:
-    name: 'krb5-replication-kprop.timer'
-    state: 'started'
+    name: "krb5-replication-kprop-{{ secondary_kdc_to_sync }}.timer"
     enabled: 'true'
+  with_items: "{{ secondary_kdcs }}"
+  loop_control:
+    loop_var: secondary_kdc_to_sync
   when: 'secondary_kdcs is defined'
   tags:
     - 'replication_1st_kdc'

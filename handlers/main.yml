@@ -52,7 +52,10 @@
   ansible.builtin.systemd:
     daemon_reload: 'yes'
 
-- name: 'Restart krb5-replication-kprop.timer'
+- name: 'Restart the krb5-replication-kprop timers'
   service:
-    name: 'krb5-replication-kprop.timer'
+    name: 'krb5-replication-kprop-{{ secondary_kdc_to_sync }}.timer'
     state: 'restarted'
+  with_items: "{{ secondary_kdcs }}"
+  loop_control:
+    loop_var: secondary_kdc_to_sync
