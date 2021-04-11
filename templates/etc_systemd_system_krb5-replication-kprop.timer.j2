@@ -6,6 +6,7 @@ Description=Timer for Kerberos KRB5 replication via kprop to {{ secondary_kdc_to
 
 [Timer]
 OnCalendar=*:0/5
+RandomizedDelaySec=60
 
 [Install]
 WantedBy=timers.target
