@@ -48,6 +48,13 @@
   tags:
     - 'replication_1st_kdc'
 
+- name: 'Create and distribute keytabs for other hosts'
+  include_tasks: create_and_distribute_keytabs.yml
+  when: 'configure_replication_on_first_kdc | bool or create_host_principals | bool'
+  tags:
+    - 'create_host_principals'
+    - 'replication_other_kdcs'
+
 - name: 'Configure the replication on the secondary KDCs'
   include_tasks: configure_replication_on_secondary_kdcs.yml
   when: 'configure_replication_on_secondary_kdcs | bool'
