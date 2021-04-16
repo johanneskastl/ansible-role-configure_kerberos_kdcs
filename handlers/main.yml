@@ -34,6 +34,14 @@
   tags:
     - 'configuration'
 
+- name: 'Restart the Kerberos kadmin service'
+  service:
+    name: "{{ kerberos_kadmin_service | default(kerberos_kdc_service) }}"
+    state: 'restarted'
+  when: 'not configure_replication_on_secondary_kdcs| bool'
+  tags:
+    - 'configuration'
+
 #
 # Replication on secondary KDCs
 #
