@@ -2,6 +2,8 @@
 # configure_kerberos_kdcs/defaults/main.yml
 
 # role logic variables
+install_kerberos_packages: 'true'
+configure_kdc_service: 'true'
 configure_kadmin_service: 'false'
 configure_replication_on_first_kdc: 'false'
 configure_replication_on_secondary_kdcs: 'false'
