@@ -20,6 +20,7 @@
 
 - name: 'Configure and start the kdc service'
   include_tasks: configure_and_start_the_kdc_service.yml
+  when: 'configure_kdc_service | bool'
   tags:
     - 'configuration'
 
