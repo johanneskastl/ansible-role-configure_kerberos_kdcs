@@ -24,6 +24,7 @@
 
 - name: 'Configure and start the kadmin service'
   include_tasks: configure_and_start_the_kadmin_service.yml
+  when: 'configure_kadmin_service | bool'
   tags:
     - 'configuration'
 
