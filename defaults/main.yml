@@ -4,6 +4,7 @@
 # role logic variables
 configure_replication_on_first_kdc: 'false'
 configure_replication_on_secondary_kdcs: 'false'
+create_host_principals: 'false'
 
 # path to krb5.conf
 path_to_krb5_conf: '/etc/krb5.conf'
