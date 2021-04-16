@@ -4,7 +4,7 @@
 - name: 'Create the kpropd.acl file'
   copy:
     content: |
-      host/{{ replication_source_server }}.{{ kerberos_dns_domain | default(kerberos_realm | lower) }}@{{ kerberos_realm }}
+      host/{{ admin_server }}.{{ kerberos_dns_domain | default(kerberos_realm | lower) }}@{{ kerberos_realm }}
     dest: "{{ path_to_kpropd_acl }}"
     owner: 'root'
     group: 'root'
