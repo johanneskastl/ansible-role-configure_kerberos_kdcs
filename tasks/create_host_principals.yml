@@ -10,6 +10,7 @@
   changed_when: 'false'
   check_mode: 'false'
   register: list_of_host_principals
+  delegate_to: "{{ admin_server }}"
   tags:
     - 'create_host_principals'
     - 'replication_1st_kdc'
@@ -23,6 +24,7 @@
   with_items:
     - "{{ inventory_hostname }}"
   when: "item not in list_of_host_principals.stdout"
+  delegate_to: "{{ admin_server }}"
   tags:
     - 'create_host_principals'
     - 'replication_1st_kdc'
@@ -38,6 +40,7 @@
   when:
     - 'host_principals_to_create is defined'
     - 'item not in list_of_host_principals.stdout'
+  delegate_to: "{{ admin_server }}"
   tags:
     - 'create_host_principals'
     - 'replication_1st_kdc'
