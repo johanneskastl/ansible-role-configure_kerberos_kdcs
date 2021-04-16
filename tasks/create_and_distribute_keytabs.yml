@@ -30,6 +30,8 @@
   delegate_to: 'localhost'
   become: 'false'
   when: 'configure_replication_on_secondary_kdcs | bool or create_host_principals | bool'
+  register: fix_permissions
+  ignore_errors: "{{ fix_permissions is undefined or ('is absent, cannot continue' in fix_permissions.stdout and ansible_check_mode) }}"
   tags:
     - 'create_host_principals'
     - 'replication_other_kdcs'
