@@ -6,7 +6,7 @@
     cmd: "kadmin.local ktadd -norandkey -k /root/keytab_for_host_{{ inventory_hostname }} host/{{ inventory_hostname }}.{{ kerberos_dns_domain | default(kerberos_realm | lower) }}"
     creates: "/root/keytab_for_host_{{ inventory_hostname }}"
   delegate_to: "{{ replication_source_server  }}"
-  when: 'configure_replication_on_secondary_kdcs | bool'
+  when: 'configure_replication_on_secondary_kdcs | bool or create_host_principals | bool'
   tags:
     - 'create_host_principals'
     - 'replication_other_kdcs'
@@ -17,7 +17,7 @@
     dest: "keytab_files/keytab_for_host_{{ inventory_hostname }}"
     flat: 'yes'
   delegate_to: "{{ replication_source_server  }}"
-  when: 'configure_replication_on_secondary_kdcs | bool'
+  when: 'configure_replication_on_secondary_kdcs | bool or create_host_principals | bool'
   tags:
     - 'create_host_principals'
     - 'replication_other_kdcs'
@@ -29,7 +29,7 @@
     mode: '0600'
   delegate_to: 'localhost'
   become: 'false'
-  when: 'configure_replication_on_secondary_kdcs | bool'
+  when: 'configure_replication_on_secondary_kdcs | bool or create_host_principals | bool'
   tags:
     - 'create_host_principals'
     - 'replication_other_kdcs'
@@ -43,7 +43,7 @@
     mode: '0600'
   ignore_errors: "{{ ansible_check_mode }}"
   diff: 'false'
-  when: 'configure_replication_on_secondary_kdcs | bool'
+  when: 'configure_replication_on_secondary_kdcs | bool or create_host_principals | bool'
   tags:
     - 'create_host_principals'
     - 'replication_other_kdcs'
