@@ -32,9 +32,9 @@
   command:
     cmd: "kadmin.local addprinc -clearpolicy -randkey host/{{ item }}.{{ kerberos_dns_domain | default(kerberos_realm | lower) }}"
   with_items:
-    - "{{ secondary_kdcs }}"
+    - "{{ host_principals_to_create }}"
   when:
-    - 'secondary_kdcs is defined'
+    - 'host_principals_to_create is defined'
     - 'item not in list_of_host_principals.stdout'
   tags:
     - 'replication_1st_kdc'
