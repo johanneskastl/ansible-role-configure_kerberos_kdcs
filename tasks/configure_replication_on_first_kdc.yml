@@ -7,7 +7,7 @@
 
 - name: "Export key for secondary KDC host principal's to krb5.keytab on the first KDC"
   command:
-    cmd: "kadmin.local ktadd -k {{ path_to_krb5_keytab }} host/{{ item }}.{{ kerberos_dns_domain | default(kerberos_realm | lower) }}"
+    cmd: "kadmin.local ktadd -norandkey -k {{ path_to_krb5_keytab }} host/{{ item }}.{{ kerberos_dns_domain | default(kerberos_realm | lower) }}"
   with_items:
     - "{{ secondary_kdcs }}"
   when:
