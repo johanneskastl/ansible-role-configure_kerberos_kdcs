@@ -29,6 +29,7 @@
 
 - name: 'Create krb5.keytab on the first KDC'
   include_tasks: create_krb5_keytab_on_first_KDC.yml
+  when: 'configure_replication_on_first_kdc | bool'
   tags:
     - 'configuration'
     - 'create_host_principals'
