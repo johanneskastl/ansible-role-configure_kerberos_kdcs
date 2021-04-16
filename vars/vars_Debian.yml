@@ -15,6 +15,9 @@ kerberos_kadmin_service: 'krb5-admin-server.service'
 # path to kdc.conf
 path_to_kdc_conf: '/etc/krb5kdc/kdc.conf'
 
+# path to kadm5.acl
+path_to_kadm5_acl: '/etc/krb5kdc/kadm5.acl'
+
 # kerberos settings and paths
 path_to_principal_database: '/var/lib/krb5kdc/principal'
 path_to_admin_keytab: 'FILE:/etc/krb5kdc/kadm5.keytab'
