@@ -26,9 +26,9 @@
     - 'replication_1st_kdc'
 
 #
-# create principals for all secondary KDCs
+# create principals for all desired host principals
 #
-- name: 'Create host principals for all secondary KDCs'
+- name: 'Create host principals for all desired host principals'
   command:
     cmd: "kadmin.local addprinc -clearpolicy -randkey host/{{ item }}.{{ kerberos_dns_domain | default(kerberos_realm | lower) }}"
   with_items:
