@@ -1,0 +1,25 @@
+---
+# configure_kerberos_kdcs/tasks/configure_and_start_the_kadmin_service.yml
+
+- name: 'Create the kadm5.acl'
+  template:
+    src: 'kadm5.acl.j2'
+    dest: "{{ path_to_kadm5_acl }}"
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify:
+    - 'Restart the Kerberos kadmin service'
+  when: 'not configure_replication_on_secondary_kdcs| bool'
+  tags:
+    - 'configuration'
+
+- name: 'Start and the Kerberos kadmin service'
+  service:
+    name: "{{ kerberos_kadmin_service | default(kerberos_kdc_service) }}"
+    state: 'started'
+    enabled: 'true'
+  when: 'not configure_replication_on_secondary_kdcs| bool'
+  tags:
+    - 'configuration'
+
