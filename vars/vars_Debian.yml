@@ -8,7 +8,7 @@ kerberos_kdc_packages:
   - 'krb5-user'
   - 'krb5-doc'
 
-# service that should be unmasked and enabled (not started yet!)
+# Kerberos services
 kerberos_kdc_service: 'krb5-kdc.service'
 
 # path to kdc.conf
