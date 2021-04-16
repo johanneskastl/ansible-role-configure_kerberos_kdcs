@@ -11,6 +11,7 @@
   check_mode: 'false'
   register: list_of_host_principals
   tags:
+    - 'create_host_principals'
     - 'replication_1st_kdc'
 
 #
@@ -23,6 +24,7 @@
     - "{{ inventory_hostname }}"
   when: "item not in list_of_host_principals.stdout"
   tags:
+    - 'create_host_principals'
     - 'replication_1st_kdc'
 
 #
@@ -37,4 +39,5 @@
     - 'host_principals_to_create is defined'
     - 'item not in list_of_host_principals.stdout'
   tags:
+    - 'create_host_principals'
     - 'replication_1st_kdc'
