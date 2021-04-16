@@ -22,6 +22,11 @@
   tags:
     - 'configuration'
 
+- name: 'Configure and start the kadmin service'
+  include_tasks: configure_and_start_the_kadmin_service.yml
+  tags:
+    - 'configuration'
+
 - name: 'Configure the replication on the first KDC'
   include_tasks: configure_replication_on_first_kdc.yml
   when: 'configure_replication_on_first_kdc | bool'
