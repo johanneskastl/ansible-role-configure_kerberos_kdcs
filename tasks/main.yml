@@ -34,7 +34,7 @@
     - 'create_host_principals'
     - 'replication_1st_kdc'
 
-- name: 'Create host principals and distribute keytabs'
+- name: 'Create host principals'
   include_tasks: create_host_principals.yml
   when: 'configure_replication_on_first_kdc | bool or create_host_principals | bool'
   tags:
