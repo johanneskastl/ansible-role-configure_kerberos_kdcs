@@ -22,11 +22,9 @@
 #
 - name: 'Create host principal for the first KDC'
   command:
-    cmd: "kadmin.local addprinc -clearpolicy -randkey host/{{ item }}.{{ kerberos_dns_domain | default(kerberos_realm | lower) }}"
-  with_items:
-    - "{{ inventory_hostname }}"
+    cmd: "kadmin.local addprinc -clearpolicy -randkey host/{{ admin_server }}.{{ kerberos_dns_domain | default(kerberos_realm | lower) }}"
   when:
-    - 'list_of_host_principals.stdout == "" or item not in list_of_host_principals.stdout'
+    - 'list_of_host_principals.stdout == "" or admin_server not in list_of_host_principals.stdout'
   delegate_to: "{{ admin_server }}"
   notify:
     - 'Delete krb5.keytab if host principal was created (as something looks wrong then)'
