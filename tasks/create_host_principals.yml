@@ -45,6 +45,8 @@
     - 'host_principals_to_create is defined'
     - 'list_of_host_principals.stdout == "" or item not in list_of_host_principals.stdout'
   delegate_to: "{{ admin_server }}"
+  notify:
+    - 'Delete to-be-transferred keytab for target host if host was freshly created'
   tags:
     - 'create_host_principals'
     - 'replication_1st_kdc'
