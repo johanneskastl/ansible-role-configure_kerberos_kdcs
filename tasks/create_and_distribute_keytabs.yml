@@ -36,7 +36,7 @@
     - 'create_host_principals'
     - 'replication_other_kdcs'
 
-- name: 'Copy keytab from the ansible control host to the secondary KDC'
+- name: 'Copy keytab from the ansible control host to the target hosts'
   copy:
     src: "keytab_files/keytab_for_host_{{ inventory_hostname }}"
     dest: '/etc/krb5.keytab'
