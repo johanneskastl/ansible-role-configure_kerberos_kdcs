@@ -30,18 +30,18 @@
   tags:
     - 'configuration'
 
+- name: 'Create host principals'
+  include_tasks: create_host_principals.yml
+  when: 'configure_replication_on_first_kdc | bool or create_host_principals | bool'
+  tags:
+    - 'create_host_principals'
+    - 'replication_1st_kdc'
+
 - name: 'Create krb5.keytab on the first KDC'
   include_tasks: create_krb5_keytab_on_first_KDC.yml
   when: 'configure_replication_on_first_kdc | bool'
   tags:
     - 'configuration'
-    - 'create_host_principals'
-    - 'replication_1st_kdc'
-
-- name: 'Create host principals'
-  include_tasks: create_host_principals.yml
-  when: 'configure_replication_on_first_kdc | bool or create_host_principals | bool'
-  tags:
     - 'create_host_principals'
     - 'replication_1st_kdc'
 
