@@ -67,3 +67,16 @@
   with_items: "{{ secondary_kdcs }}"
   loop_control:
     loop_var: secondary_kdc_to_sync
+
+#
+#
+#
+- name: 'Delete krb5.keytab if host principal was created (as something looks wrong then)'
+  file:
+    path: "{{ path_to_krb5_keytab }}"
+    state: 'absent'
+  delegate_to: "{{ admin_server }}"
+  tags:
+    - 'create_host_principals'
+    - 'configuration'
+    - 'replication_1st_kdc'
