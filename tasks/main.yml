@@ -34,6 +34,7 @@
   include_tasks: create_host_principals.yml
   when: 'configure_replication_on_first_kdc | bool or create_host_principals | bool'
   tags:
+    - 'configuration'
     - 'create_host_principals'
     - 'replication_1st_kdc'
 
