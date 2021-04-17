@@ -24,7 +24,8 @@
     cmd: "kadmin.local addprinc -clearpolicy -randkey host/{{ item }}.{{ kerberos_dns_domain | default(kerberos_realm | lower) }}"
   with_items:
     - "{{ inventory_hostname }}"
-  when: "item not in list_of_host_principals.stdout"
+  when:
+    - 'list_of_host_principals.stdout == "" or item not in list_of_host_principals.stdout'
   delegate_to: "{{ admin_server }}"
   tags:
     - 'create_host_principals'
@@ -40,7 +41,7 @@
     - "{{ host_principals_to_create }}"
   when:
     - 'host_principals_to_create is defined'
-    - 'item not in list_of_host_principals.stdout'
+    - 'list_of_host_principals.stdout == "" or item not in list_of_host_principals.stdout'
   delegate_to: "{{ admin_server }}"
   tags:
     - 'create_host_principals'
