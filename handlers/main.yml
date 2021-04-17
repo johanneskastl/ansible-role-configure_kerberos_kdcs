@@ -80,3 +80,14 @@
     - 'create_host_principals'
     - 'configuration'
     - 'replication_1st_kdc'
+#
+# Delete to-be-transferred keytab for target host if host was freshly created
+#
+- name: 'Delete to-be-transferred keytab for target host if host was freshly created'
+  file:
+    path: "/root/keytab_for_host_{{ inventory_hostname }}"
+    state: 'absent'
+  delegate_to: "{{ admin_server }}"
+  tags:
+    - 'create_host_principals'
+    - 'replication_other_kdcs'
