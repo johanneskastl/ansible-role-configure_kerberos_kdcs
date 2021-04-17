@@ -13,6 +13,7 @@
   failed_when: "list_of_host_principals.rc != 0 and list_of_host_principals.stdout != ''"
   delegate_to: "{{ admin_server }}"
   tags:
+    - 'configuration'
     - 'create_host_principals'
     - 'replication_1st_kdc'
 
@@ -29,6 +30,7 @@
   delegate_to: "{{ admin_server }}"
   tags:
     - 'create_host_principals'
+    - 'configuration'
     - 'replication_1st_kdc'
 
 #
