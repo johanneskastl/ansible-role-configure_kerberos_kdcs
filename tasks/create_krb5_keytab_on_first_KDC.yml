@@ -11,6 +11,8 @@
   with_items:
     - "{{ inventory_hostname }}"
   delegate_to: "{{ admin_server }}"
+  register: creation_of_keytab_on_first_kdc
+  failed_when: "creation_of_keytab_on_first_kdc.stderr is defined and 'does not exist' in creation_of_keytab_on_first_kdc.stderr"
   tags:
     - 'configuration'
     - 'create_host_principals'
