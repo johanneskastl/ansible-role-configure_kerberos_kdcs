@@ -50,3 +50,10 @@
   tags:
     - 'create_host_principals'
     - 'replication_1st_kdc'
+
+- name: 'Flush handlers to make sure the krb5.keytab is being deleted if the host principal was newly created'
+  meta: flush_handlers
+  tags:
+    - 'create_host_principals'
+    - 'configuration'
+    - 'replication_1st_kdc'
