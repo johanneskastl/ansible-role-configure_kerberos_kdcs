@@ -69,7 +69,7 @@
     loop_var: secondary_kdc_to_sync
 
 #
-#
+# Delete krb5.keytab if host principal was created
 #
 - name: 'Delete krb5.keytab if host principal was created (as something looks wrong then)'
   file:
