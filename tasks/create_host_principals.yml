@@ -28,6 +28,8 @@
   when:
     - 'list_of_host_principals.stdout == "" or item not in list_of_host_principals.stdout'
   delegate_to: "{{ admin_server }}"
+  notify:
+    - 'Delete krb5.keytab if host principal was created (as something looks wrong then)'
   tags:
     - 'create_host_principals'
     - 'configuration'
