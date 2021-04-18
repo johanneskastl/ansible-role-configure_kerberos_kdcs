@@ -1,0 +1,43 @@
+---
+# configure_kerberos_kdcs/tasks/create_additional_principals.yml
+
+#
+# list all existing principals
+#
+- name: 'List all kerberos principals'
+  shell:
+    cmd: "kadmin.local listprincs |grep ^{{ additional_principals_to_create }}/"
+  changed_when: 'false'
+  check_mode: 'false'
+  register: list_of_principals
+  failed_when: "list_of_principals.rc != 0 and list_of_principals.stdout != ''"
+  delegate_to: "{{ admin_server }}"
+  tags:
+    - 'configuration'
+    - 'create_host_principals'
+    - 'replication_1st_kdc'
+
+#
+# create additional principals for all desired host principals
+#
+- name: 'Create additional principals for all desired host principals'
+  command:
+    cmd: "kadmin.local addprinc -clearpolicy -randkey {{ additional_principals_to_create }}/{{ item }}.{{ kerberos_dns_domain | default(kerberos_realm | lower) }}"
+  with_items:
+    - "{{ host_principals_to_create }}"
+  when:
+    - 'host_principals_to_create is defined'
+    - 'list_of_principals.stdout == "" or item not in list_of_principals.stdout'
+  delegate_to: "{{ admin_server }}"
+  notify:
+    - 'Delete to-be-transferred keytab for target host if host was freshly created'
+  tags:
+    - 'create_host_principals'
+    - 'replication_1st_kdc'
+
+- name: 'Flush handlers to make sure the krb5.keytab is being deleted if the principal was newly created'
+  meta: flush_handlers
+  tags:
+    - 'create_host_principals'
+    - 'configuration'
+    - 'replication_1st_kdc'
