@@ -14,6 +14,33 @@
     - 'create_host_principals'
     - 'replication_other_kdcs'
 
+- name: 'List existing principals in existing keytabs'
+  shell:
+    cmd: "klist -kte /root/keytab_for_host_{{ inventory_hostname }} | grep {{ additional_principals_to_create }}/{{ inventory_hostname }}.{{ kerberos_dns_domain | default(kerberos_realm | lower) }}"
+  check_mode: 'false'
+  changed_when: 'false'
+  failed_when: '"not found while starting keytab scan" in principals_in_existing_keytab.stderr and not ansible_check_mode'
+  delegate_to: "{{ admin_server }}"
+  register: principals_in_existing_keytab
+  when:
+    - 'configure_replication_on_secondary_kdcs | bool or create_host_principals | bool'
+    - 'additional_principals_to_create is defined'
+  tags:
+    - 'create_host_principals'
+    - 'replication_other_kdcs'
+
+- name: 'Add additional principals to keytab'
+  command:
+    cmd: "kadmin.local ktadd -norandkey -k /root/keytab_for_host_{{ inventory_hostname }} {{ additional_principals_to_create }}/{{ inventory_hostname }}.{{ kerberos_dns_domain | default(kerberos_realm | lower) }}"
+  delegate_to: "{{ admin_server }}"
+  when:
+    - 'configure_replication_on_secondary_kdcs | bool or create_host_principals | bool'
+    - 'additional_principals_to_create is defined'
+    - 'principals_in_existing_keytab.stdout == ""'
+  tags:
+    - 'create_host_principals'
+    - 'replication_other_kdcs'
+
 #
 # Fetch keytab to ansible control host
 #
