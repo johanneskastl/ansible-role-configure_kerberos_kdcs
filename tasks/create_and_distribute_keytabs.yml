@@ -1,6 +1,9 @@
 ---
 # configure_kerberos_kdcs/tasks/create_and_distribute_keytabs.yml
 
+#
+# create keytab for target hosts
+#
 - name: 'Create keytab for hosts on first KDC'
   command:
     cmd: "kadmin.local ktadd -norandkey -k /root/keytab_for_host_{{ inventory_hostname }} host/{{ inventory_hostname }}.{{ kerberos_dns_domain | default(kerberos_realm | lower) }}"
@@ -11,6 +14,9 @@
     - 'create_host_principals'
     - 'replication_other_kdcs'
 
+#
+# Fetch keytab to ansible control host
+#
 - name: 'Fetch keytabs to ansible control host'
   fetch:
     src: "/root/keytab_for_host_{{ inventory_hostname }}"
@@ -36,6 +42,9 @@
     - 'create_host_principals'
     - 'replication_other_kdcs'
 
+#
+# Transfer keytab to the target host
+#
 - name: 'Copy keytab from the ansible control host to the target hosts'
   copy:
     src: "keytab_files/keytab_for_host_{{ inventory_hostname }}"
